@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="testAngularGeo">
+<head>
+    <title>Testing angularGeo</title>
+    <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.min.js"></script>
+    <script src="../scripts/providers/angulargeo-google.js"></script>
+    <script src="../scripts/angulargeo.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+<h2>Testing...</h2>
+<div data-ng-controller="AppCtrl">
+    <h4>Address:</h4>
+    <p>{{address}}</p>
+    <h4>Geo:</h4>
+    <p>{{geo}}</p>
+    <button data-ng-click="geocodeAddress()">Geo</button>
+</div>
+
+</body>
+</html>

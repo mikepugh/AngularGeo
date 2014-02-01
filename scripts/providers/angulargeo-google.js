@@ -3,8 +3,10 @@
  */
 (function() {
     "use strict";
-    angular.module('angularGeo.providers')
-        .provider('angularGeoGoogle', function($log, $q) {
+    angular.module('angular-geo-providers', [])
+        .provider('angularGeoGoogle', function() {
+            var $$q, $$log;
+
             if(typeof google === 'undefined' || (typeof google !== 'undefined' && typeof google.maps === 'undefined')) {
                 throw new Error("Google Maps API V3 is required for angulargeo-google to function, please include it");
             }
@@ -14,7 +16,7 @@
 
                 },
                 geocode: function(address, bounds, region, restrictions, filters) {
-                    var deferred = $q.defer();
+                    var deferred = $$q.defer();
                     $$geocoder.geocode({'address': address}, function(results, status) {
                         if(status === google.maps.GeocoderStatus.OK) {
                             //todo: Normalize result set once we have a better idea what bing, etc apis return
@@ -27,7 +29,7 @@
                             deferred.reject("FAILED");
                         }
                     });
-                    return deferred;
+                    return deferred.promise;
                 },
                 reverseGeocode: function(latLng, bounds, region, restrictions, filters) {
 
@@ -35,7 +37,9 @@
             };
             return {
                 base: svc,
-                $get: function() {
+                $get: function($log, $q) {
+                    $$q = $q;
+                    $$log = $log;
                     return svc;
                 }
             }
