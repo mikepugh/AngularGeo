@@ -31,25 +31,29 @@
             }
             var $$currentProvider = 0;
 
+            var $$geocode = function(address, bounds, region, restrictions, filters, promise) {
+                var self = this;
+                var deferred = promise || $q.defer();
+                var p = $$providers[$$currentProvider].geocode(address, bounds, region, restrictions, filters);
+                p.then(function(results) {
+                    deferred.resolve(results);
+                }, function(err) {
+                    if($$providers.length === 1) {
+                        deferred.reject(err);
+                    }
+                    if($$currentProvider < $$providers.length - 1) {
+                        $$currentProvider++;
+                    } else {
+                        $$currentProvider = 0;
+                    }
+                    return self.geocode(address, bounds, region, restrictions, filters, deferred);
+                });
+                return deferred;
+            };
+
             return {
-                geocode: function(address, bounds, region, restrictions, filters, promise) {
-                    var self = this;
-                    var deferred = promise || $q.defer();
-                    var p = $$providers[$$currentProvider].geocode(address, bounds, region, restrictions, filters);
-                    p.then(function(results) {
-                        deferred.resolve(results);
-                    }, function(err) {
-                       if($$providers.length === 1) {
-                           deferred.reject(err);
-                       }
-                       if($$currentProvider < $$providers.length - 1) {
-                           $$currentProvider++;
-                       } else {
-                           $$currentProvider = 0;
-                       }
-                       return self.geocode(address, bounds, region, restrictions, filters, deferred);
-                    });
-                    return deferred;
+                geocode: function(address, bounds, region, restrictions, filters) {
+                    return $$geocode(address, bounds, region, restrictions, filters, null);
                 },
                 reverseGeocode: function(latLng, bounds, region, restrictions, filters) {},
                 getCurrentPosition: function(options, autoReverseGeocode) {
