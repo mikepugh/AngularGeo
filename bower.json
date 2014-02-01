@@ -1,0 +1,22 @@
+{
+  "name": "AngularGeo",
+  "version": "0.1.0",
+  "homepage": "https://github.com/mikepugh/AngularGeo",
+  "authors": [
+    "Mike Pugh <mikepugh82@gmail.com>"
+  ],
+  "description": "Angular JS based service wrapper for various geolocation services",
+  "main": "angulargeo.js",
+  "keywords": [
+    "angular",
+    "geolocation"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

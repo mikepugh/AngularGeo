@@ -1,0 +1,31 @@
+{
+  "name": "AngularGeo",
+  "version": "0.1.0",
+  "description": "AngularGeo\r ==========",
+  "main": "angulargeo.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mikepugh/AngularGeo.git"
+  },
+  "keywords": [
+    "angular",
+    "gelocation"
+  ],
+  "author": "Mike Pugh (mikepugh82@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mikepugh/AngularGeo/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-uglify": "~0.3.2",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "jshint-stylish": "~0.1.5",
+    "grunt-ngmin": "0.0.3"
+  }
+}
