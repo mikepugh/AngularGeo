@@ -5,14 +5,10 @@
 (function() {
     "use strict";
     angular.module('testAngularGeo', ['angular-geo','angular-geo-providers'])
-        .config(function(angularGeoConfigProvider, angularGeoGoogleProvider) {
-            angularGeoConfigProvider
-                .addProvider(angularGeoGoogleProvider.base, {api_key: 'abcdefghi'});
-            //    .addProvider(angularGeoBing.base, {api_key: 'foobar'});
-        })
-        // needed to have angular call the $get method of the provider, and populate required $q and $log services
-        .run(function(angularGeoGoogle) {
-
+        .config(function(angularGeoProvider, angularGeoGoogleProvider) {
+            angularGeoGoogleProvider.config({'api_key': 'foobar'});
+            angularGeoProvider
+                .addProvider(angularGeoGoogleProvider.name);
         })
         .controller('AppCtrl', function($log, $scope, angularGeo) {
             $scope.address = '30 Rockefeller Plaza, New York, NY';

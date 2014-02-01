@@ -6,15 +6,13 @@
     angular.module('angular-geo-providers', [])
         .provider('angularGeoGoogle', function() {
             var $$q, $$log;
+            var $$configuration;
 
             if(typeof google === 'undefined' || (typeof google !== 'undefined' && typeof google.maps === 'undefined')) {
                 throw new Error("Google Maps API V3 is required for angulargeo-google to function, please include it");
             }
             var $$geocoder = new google.maps.Geocoder();
             var svc = {
-                configure: function(config) {
-
-                },
                 geocode: function(address, bounds, region, restrictions, filters) {
                     var deferred = $$q.defer();
                     $$geocoder.geocode({'address': address}, function(results, status) {
@@ -36,7 +34,11 @@
                 }
             };
             return {
-                base: svc,
+                name: 'angularGeoGoogle',
+                config: function(config) {
+                    // do some config? set api-key?
+
+                },
                 $get: function($log, $q) {
                     $$q = $q;
                     $$log = $log;
