@@ -5,7 +5,7 @@
     "use strict";
     angular.module('angularGeo.providers')
         .service('angulargeo-google', function($log, $q) {
-            if(typeof google === 'undefined') {
+            if(typeof google === 'undefined' || (typeof google !== 'undefined' && typeof google.maps === 'undefined')) {
                 throw new Error("Google Maps API V3 is required for angulargeo-google to function, please include it");
             }
             var $$geocoder = new google.maps.Geocoder();
