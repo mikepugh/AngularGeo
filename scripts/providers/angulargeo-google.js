@@ -4,12 +4,12 @@
 (function() {
     "use strict";
     angular.module('angularGeo.providers')
-        .service('angulargeo-google', function($log, $q) {
+        .provider('angularGeoGoogle', function($log, $q) {
             if(typeof google === 'undefined' || (typeof google !== 'undefined' && typeof google.maps === 'undefined')) {
                 throw new Error("Google Maps API V3 is required for angulargeo-google to function, please include it");
             }
             var $$geocoder = new google.maps.Geocoder();
-            return {
+            var svc = {
                 configure: function(config) {
 
                 },
@@ -27,9 +27,16 @@
                             deferred.reject("FAILED");
                         }
                     });
+                    return deferred;
                 },
                 reverseGeocode: function(latLng, bounds, region, restrictions, filters) {
 
+                }
+            };
+            return {
+                base: svc,
+                $get: function() {
+                    return svc;
                 }
             }
         });
