@@ -3,7 +3,7 @@
  */
 (function() {
     "use strict";
-    angular.module('angular-geo-providers', [])
+    angular.module('angular-geo-providers.google', [])
         .provider('angularGeoGoogle', function() {
             var $$q, $$log;
             var $$configuration;

@@ -38,7 +38,6 @@
                 }
 
                 var $$geocode = function(address, bounds, region, restrictions, filters, promise) {
-                    var self = this;
                     var deferred = promise || $q.defer();
                     var p = $$providers[$$currentProvider].geocode(address, bounds, region, restrictions, filters);
                     p.then(function(results) {
@@ -52,7 +51,7 @@
                         } else {
                             $$currentProvider = 0;
                         }
-                        return self.$$geocode(address, bounds, region, restrictions, filters, deferred);
+                        return $$geocode(address, bounds, region, restrictions, filters, deferred);
                     });
                     return deferred.promise;
                 };
