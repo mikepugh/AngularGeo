@@ -6,12 +6,17 @@
   "use strict";
 
   var angularGeo = angular.module('angular-geo', []);
+  angularGeo.constant('angularGeo_msgs', {
+    'errors.unsupportedBrowser':'Browser geolocation not supported',
+    'errors.noServices':'angularGeo could not locate any of the geo providers specified, verify that you have them properly linked',
+    'errors.noProviders':'angularGeo requires at least one geo provider'
+  });
   angularGeo.provider('angularGeo', function() {
     var $$geoConfig = {
       providerSvcNames: [],
       providers: []
     };
-    var $$supportsGeolocation = 'geolocation' in navigator;
+    var $$supportsGeolocation = false;
     var $$watchId;
     var $$currentProvider = 0;
 
@@ -20,9 +25,12 @@
         $$geoConfig.providerSvcNames.push(providerSvcName);
         return this;
       },
-      $get: function ($log, $q, $timeout, $rootScope, $injector) {
+      $get: function ($log, $q, $timeout, $rootScope, $injector, $window, angularGeo_msgs) {
+
+        $$supportsGeolocation = 'geolocation' in $window.navigator;
+
         if($$geoConfig.providerSvcNames.length === 0) {
-          throw new Error("AngularGeo requires at least 1 geo provider");
+          throw new Error(angularGeo_msgs.errors.noProviders);
         }
         // Instantiate the geo providers and store them within the $$geoConfig object
         for(var i = 0; i < $$geoConfig.providerSvcNames.length; i++) {
@@ -34,7 +42,7 @@
         }
         var $$providers = $$geoConfig.providers;
         if($$providers.length === 0) {
-          throw new Error('angularGeo could not locate any of the geo providers specified, verify that you have them properly linked');
+          throw new Error(angularGeo_msgs.errors.noServices);
         }
 
         var $$geocode = function(address, bounds, region, restrictions, filters, promise) {
@@ -64,10 +72,10 @@
           getCurrentPosition: function(options, autoReverseGeocode) {
             var self = this;
             if(!$$supportsGeolocation) {
-              throw new Error("Browser geolocation not supported");
+              throw new Error(angularGeo_msgs.errors.unsupportedBrowser);
             }
             var deferred = $q.defer();
-            navigator.geolocation.getCurrentPosition(function(pos) {
+            $window.navigator.geolocation.getCurrentPosition(function(pos) {
               if(autoReverseGeocode) {
                 var p = self.reverseGeocode({latitude: pos.coords.latitude, longitude: pos.coords.longitude}, null, null, null, null);
                 p.then(function(results) {
@@ -85,10 +93,10 @@
           watchPosition: function(options) {
             var self = this;
             if(!$$supportsGeolocation) {
-              throw new Error("Browser geolocation not supported");
+              throw new Error(angularGeo_msgs.errors.unsupportedBrowser);
             }
             var deferred = $q.defer();
-            $$watchId = navigator.geolocation.watchPosition(function(pos) {
+            $$watchId = $window.navigator.geolocation.watchPosition(function(pos) {
               $rootScope.$broadcast("angulargeo:watchposition", pos);
             }, function(err) {
               deferred.reject(err);
@@ -98,9 +106,9 @@
           },
           clearWatch: function() {
             if(!$$supportsGeolocation) {
-              throw new Error("Browser geolocation not supported");
+              throw new Error(angularGeo_msgs.errors.unsupportedBrowser);
             }
-            navigator.geolocation.clearWatch($$watchId);
+            $window.navigator.geolocation.clearWatch($$watchId);
           }
         }
       }
