@@ -201,13 +201,11 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    'ngmin',
     'copy:dist',
     'uglify'
   ]);
 
   grunt.registerTask('default', [
-    'test',
-    'serve'
+    'build'
   ]);
 };
