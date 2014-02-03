@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="css/style/semantic.css"/>
   <!--<script src="//ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>-->
   <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.min.js"></script>
+  <script src="../bower_components/angular/angular.min.js"></script>
   <script src="../scripts/providers/angulargeo-google.js"></script>
   <script src="../scripts/providers/angulargeo-bing.js"></script>
   <script src="../scripts/angulargeo.js"></script>
@@ -24,7 +24,7 @@
   <div class="ui buttons">
     <button class="ui button" data-ng-click="geocodeAddress()">Geo</button>
     <div class="or"></div>
-    <button class="ui position button">Semantic UI Testing!</button>
+    <button class="ui position button" data-ng-click="getLocation()">Get Current Location</button>
   </div>
 </div>
 

@@ -23,5 +23,13 @@
           $log.error(err);
         });
       }
+      $scope.getLocation = function() {
+        angularGeo.getCurrentPosition({},true).then(function(results) {
+          $scope.geo = results;
+        }, function(err) {
+          $log.error(err);
+        })
+      }
+
     });
 }).call(this);

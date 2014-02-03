@@ -53,6 +53,7 @@
           }, function(err) {
             if($$providers.length === 1) {
               deferred.reject(err);
+              return;
             }
             if($$currentProvider < $$providers.length - 1) {
               $$currentProvider++;
@@ -60,6 +61,26 @@
               $$currentProvider = 0;
             }
             return $$geocode(address, bounds, region, restrictions, filters, deferred);
+          });
+          return deferred.promise;
+        };
+
+        var $$reverseGeo = function(latLng, bounds, region, restrictions, filters, promise) {
+          var deferred = promise || $q.defer();
+          var p = $$providers[$$currentProvider].reverseGeocode(latLng, bounds, region, restrictions, filters);
+          p.then(function(results) {
+            deferred.resolve(results);
+          }, function(err) {
+            if($$providers.length === 1) {
+              deferred.reject(err);
+              return;
+            }
+            if($$currentProvider < $$providers.length - 1) {
+              $$currentProvider++;
+            } else {
+              $$currentProvider = 0;
+            }
+            return $$reverseGeo(latLng, bounds, region, restrictions, filters, deferred);
           });
           return deferred.promise;
         };
@@ -77,14 +98,15 @@
             var deferred = $q.defer();
             $window.navigator.geolocation.getCurrentPosition(function(pos) {
               if(autoReverseGeocode) {
-                var p = self.reverseGeocode({latitude: pos.coords.latitude, longitude: pos.coords.longitude}, null, null, null, null);
+                var p = $$reverseGeo({latitude: pos.coords.latitude, longitude: pos.coords.longitude}, null, null, null, null);
                 p.then(function(results) {
                   deferred.resolve(results);
                 }, function(err) {
                   deferred.reject(err);
                 });
+              } else {
+                deferred.resolve(pos);
               }
-              deferred.resolve(pos);
             }, function(err) {
               deferred.reject(err);
             }, options);
