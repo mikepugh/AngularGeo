@@ -89,7 +89,9 @@
           geocode: function(address, bounds, region, restrictions, filters) {
             return $$geocode(address, bounds, region, restrictions, filters, null);
           },
-          reverseGeocode: function(latLng, bounds, region, restrictions, filters) {},
+          reverseGeocode: function(latLng, bounds, region, restrictions, filters) {
+            return $$reverseGeo(latLng, bounds, region, restrictions, filters);
+          },
           getCurrentPosition: function(options, autoReverseGeocode) {
             var self = this;
             if(!$$supportsGeolocation) {
