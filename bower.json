@@ -1,6 +1,6 @@
 {
   "name": "AngularGeo",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "homepage": "https://github.com/mikepugh/AngularGeo",
   "authors": [
     "Mike Pugh <mikepugh82@gmail.com>"
@@ -11,6 +11,9 @@
     "angular",
     "geolocation"
   ],
+  "dependencies": {
+    "angular": "~1.2.5"
+  },
   "license": "MIT",
   "ignore": [
     "**/.*",
