@@ -11,7 +11,7 @@
     'errors.noServices':'angularGeo could not locate any of the geo providers specified, verify that you have them properly linked',
     'errors.noProviders':'angularGeo requires at least one geo provider'
   });
-  angularGeo.provider('angularGeo', function() {
+  angularGeo.provider('angularGeo', function () {
     var $$geoConfig = {
       providerSvcNames: [],
       providers: []
@@ -25,7 +25,7 @@
         $$geoConfig.providerSvcNames.push(providerSvcName);
         return this;
       },
-      $get: function ($log, $q, $timeout, $rootScope, $injector, $window, angularGeo_msgs) {
+      $get: function angularGeo($log, $q, $timeout, $rootScope, $injector, $window, angularGeo_msgs) {
 
         $$supportsGeolocation = 'geolocation' in $window.navigator;
 

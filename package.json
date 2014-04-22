@@ -2,7 +2,7 @@
   "name": "AngularGeo",
   "version": "0.2.2",
   "description": "AngularGeo\r ==========",
-  "main": "angulargeo.js",
+  "main": "dist/angulargeo.js",
   "scripts": {
     "test": "test"
   },
