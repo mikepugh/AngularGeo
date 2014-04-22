@@ -1,6 +1,6 @@
 {
   "name": "AngularGeo",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "AngularGeo\r ==========",
   "main": "dist/angulargeo.js",
   "scripts": {
