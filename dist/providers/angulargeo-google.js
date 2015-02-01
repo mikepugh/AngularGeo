@@ -7,15 +7,19 @@
     .provider('angularGeoGoogle', function() {
       var $$q, $$log;
       var $$configuration;
-
-      if(typeof google === 'undefined' || (typeof google !== 'undefined' && typeof google.maps === 'undefined')) {
-        throw new Error("Google Maps API V3 is required for angulargeo-google to function, please include it");
+      var $$geocoder;
+      var $$fetchGeocoder = function(){
+        if($$geocoder) return $$geocoder;
+        if(typeof google === 'undefined' || (typeof google !== 'undefined' && typeof google.maps === 'undefined')) {
+          throw new Error("Google Maps API V3 is required for angulargeo-google to function, please include it");
+        }
+        $$geocoder = new google.maps.Geocoder();
+        return $$geocoder;
       }
-      var $$geocoder = new google.maps.Geocoder();
       var svc = {
         geocode: function(address, bounds, region, restrictions, filters) {
           var deferred = $$q.defer();
-          $$geocoder.geocode({'address': address}, function(results, status) {
+          $$fetchGeocoder().geocode({'address': address}, function(results, status) {
             if(status === google.maps.GeocoderStatus.OK) {
               var _res = {};
               _res.length = results.length;
@@ -85,7 +89,7 @@
         },
         reverseGeocode: function(latLng, bounds, region, restrictions, filters) {
           var deferred = $$q.defer();
-          $$geocoder.geocode({'latLng': new google.maps.LatLng(latLng.latitude, latLng.longitude)}, function(results, status) {
+          $$fetchGeocoder().geocode({'latLng': new google.maps.LatLng(latLng.latitude, latLng.longitude)}, function(results, status) {
             if(status === google.maps.GeocoderStatus.OK) {
               //todo: Normalize result set once we have a better idea what bing, etc apis return
               deferred.resolve(results);
