@@ -6,7 +6,7 @@
     "Mike Pugh <mikepugh82@gmail.com>"
   ],
   "description": "Angular JS based service wrapper for various geolocation services",
-  "main": "angulargeo.js",
+  "main": "dist/angulargeo.js",
   "keywords": [
     "angular",
     "geolocation"
